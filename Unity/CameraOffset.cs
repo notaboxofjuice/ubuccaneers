@@ -35,7 +35,7 @@ public class CameraOffset : MonoBehaviour
     {
         // Calculate the offset position
         Vector3 _avgPos = AvgPos(); // Calculate the average position of all targets
-        Vector3 _movePos = _avgPos + (Vector3.up * minHeight) - (WhereIsForward(_avgPos) * minFollowDist); // Apply offsets
+        Vector3 _movePos = _avgPos + (Vector3.up * currentHeight) - (WhereIsForward(_avgPos) * minFollowDist); // Apply offsets
         _movePos.y = Mathf.Clamp(currentHeight, minHeight, maxHeight); // Clamp the height
         // Perform movement and rotation
         transform.SetPositionAndRotation(Vector3.SmoothDamp(transform.position, _movePos, ref velocity, smoothTime), Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(_avgPos - transform.position), smoothTime));
