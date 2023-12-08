@@ -35,7 +35,7 @@ public class CameraOffset : MonoBehaviour
     {
         // Calculate the offset position
         Vector3 _avgPos = AvgPos(); // Calculate the average position of all targets
-        Vector3 _movePos = _avgPos + (Vector3.up * currentHeight) - (WhereIsForward(_avgPos) * minFollowDist); // Apply offsets
+        Vector3 _movePos = _avgPos + (Vector3.up * currentHeight) - (WhereIsForward() * minFollowDist); // Apply offsets
         _movePos.y = Mathf.Clamp(currentHeight, minHeight, maxHeight); // Clamp the height
         // Perform movement and rotation
         transform.SetPositionAndRotation(Vector3.SmoothDamp(transform.position, _movePos, ref velocity, smoothTime), Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(_avgPos - transform.position), smoothTime));
@@ -58,10 +58,10 @@ public class CameraOffset : MonoBehaviour
         currentHeight = _greatestDist; // Set the current height to the greatest distance
         return _avgPosition / targetTransforms.Count; // Return the average position
     }
-    private Vector3 WhereIsForward(Vector3 _targetPoint) // Return the forward vector based on the primary target or the average position
+    private Vector3 WhereIsForward() // Return the forward vector based on the primary target or the average position
     {
         if (StayBehindPrimaryTarget) return primaryTarget.forward; // If the camera should stay behind the primary target, return the primary target's forward vector
-        else return _targetPoint; // Otherwise, return the average position
+        else return Vector3.forward; // Otherwise, return generic forward
     }
     #endregion
 }
